@@ -18,14 +18,14 @@ export default function Menu() {
 
   return <section className="menu-section section-pad" id="menu">
     <div className="section-heading reveal">
-      <p className="eyebrow">✳ THE MAIN EVENT</p>
+      <p className="eyebrow"><Sparkles aria-hidden="true"/> THE MAIN EVENT</p>
       <h2>ONE CRAVING.<br/><em>TWO</em> WAYS.</h2>
       <p>Keep it classic or turn up the heat. That's the whole menu — no overthinking required.</p>
     </div>
     <div className="menu-grid">
       <article className={choice==='normal'?'menu-card selected reveal':'menu-card reveal'}>
         <div className="card-meta"><span>01 / THE CLASSIC</span><Sparkles size={19}/></div>
-        <div className="food-visual normal-visual"><div className="food-halo"/><span className="food-emoji">🍟</span><b>THE ORIGINAL</b></div>
+        <div className="food-visual normal-visual"><img src="/masala-fries-hero.png" alt="" /><b>THE ORIGINAL</b></div>
         <div className="card-copy"><p className="card-overline">NO FUSS. ALL FLAVOUR.</p><h3>Normal Fries</h3>
           <p>Golden fries with our signature masala seasoning. Simple, crunchy, seriously satisfying.</p>
           <button className="select-button" onClick={()=>{setChoice('normal');setNotice('')}}>{choice==='normal'?<><Check size={16}/> SELECTED</>:<>CHOOSE NORMAL <ArrowUpRight size={16}/></>}</button>
@@ -33,7 +33,7 @@ export default function Menu() {
       </article>
       <article className={choice==='custom'?'menu-card selected reveal':'menu-card reveal'}>
         <div className="card-meta"><span>02 / MAKE IT YOURS</span><Flame size={19}/></div>
-        <div className="food-visual custom-visual"><div className="food-halo"/><span className="food-emoji">🍟</span><b>YOUR HEAT. YOUR RULES.</b><span className="pepper-deco">🌶️ ✳ 🌶️</span></div>
+        <div className="food-visual custom-visual"><img src="/masala-fries-hero.png" alt="" /><b>YOUR HEAT. YOUR RULES.</b></div>
         <div className="card-copy"><p className="card-overline">PICK YOUR LEVEL.</p><h3>Custom Fries</h3>
           <p>Same golden crunch, your choice of spice. Pick the heat that matches your mood.</p>
           <button className="select-button" onClick={()=>{setChoice('custom');setNotice('')}}>{choice==='custom'?<><Check size={16}/> SELECTED</>:<>CUSTOMISE YOURS <ArrowUpRight size={16}/></>}</button>
@@ -50,6 +50,6 @@ export default function Menu() {
       <button className="button button-dark" onClick={confirm}>Confirm my pick <ArrowUpRight size={16}/></button>
     </div>
     {notice&&<p className="confirmation" role="status"><Check size={17}/>{notice}</p>}
-    <p className="menu-footnote">TWO CHOICES. ENDLESS CRAVINGS. <span>✳</span></p>
+    <p className="menu-footnote">TWO CHOICES. ENDLESS CRAVINGS. <Sparkles aria-hidden="true"/></p>
   </section>;
 }

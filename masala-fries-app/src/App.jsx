@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Sparkles } from 'lucide-react';
 import Header from './components/Header.jsx';
 import Hero from './components/Hero.jsx';
 import Menu from './components/Menu.jsx';
@@ -25,10 +26,10 @@ export default function App() {
   }, []);
 
   return <>
-    <div className="announcement"><span>✳</span> BIG CRUNCH. BOLD MASALA. <span>✳</span></div>
+    <div className="announcement"><Sparkles aria-hidden="true"/> BIG CRUNCH. BOLD MASALA. <Sparkles aria-hidden="true"/></div>
     <Header/>
     <main><Hero/><Menu/><Story/>
-      <section className="closing"><p className="eyebrow light">✳ YOUR FRIES ARE CALLING</p><h2>LET'S GET<br/><em>CRUNCHING.</em></h2><a className="button button-gold" href="#menu">Find your fries ↗</a><span className="closing-spark">✳</span></section>
+      <section className="closing"><p className="eyebrow light"><Sparkles aria-hidden="true"/> YOUR FRIES ARE CALLING</p><h2>LET&apos;S GET<br/><em>CRUNCHING.</em></h2><a className="button button-gold" href="#menu">Find your fries ↗</a><Sparkles className="closing-spark" aria-hidden="true"/></section>
     </main>
     <Footer/>
   </>;
