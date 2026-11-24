@@ -1,4 +1,4 @@
-import { ArrowDown, ArrowUpRight, Star } from 'lucide-react';
+import { ArrowDown, ArrowUpRight, Sparkles, Star } from 'lucide-react';
 
 export default function Hero() {
   return <section className="hero" id="home">
@@ -10,19 +10,15 @@ export default function Hero() {
         <a className="button button-gold" href="#menu">Pick your fries <ArrowUpRight size={16}/></a>
         <a className="text-link light-link" href="#story">What's the vibe? <ArrowDown size={14}/></a>
       </div>
-      <div className="hero-proof"><span><Star size={13} fill="currentColor"/> FULL-ON FLAVOUR</span><span>✳</span><span>MADE FOR THE CRUNCH</span></div>
+      <div className="hero-proof"><span><Star size={13} fill="currentColor"/> FULL-ON FLAVOUR</span><Sparkles aria-hidden="true"/><span>MADE FOR THE CRUNCH</span></div>
     </div>
-    <div className="hero-art" aria-label="Illustration of golden fries">
-      <div className="orbit orbit-one"/><div className="orbit orbit-two"/>
-      <span className="art-spark spark-one">✳</span><span className="art-spark spark-two">✦</span>
+    <div className="hero-art">
+      <img className="hero-photo" src="/masala-fries-hero.png" alt="Crispy golden masala fries served in a paper tray" />
+      <Sparkles className="art-spark spark-one" aria-hidden="true"/><Sparkles className="art-spark spark-two" aria-hidden="true"/>
       <span className="art-sticker sticker-left">CRISPY<br/><b>OUTSIDE</b></span>
-      <span className="art-sticker sticker-right">SPICY<br/><b>INSIDE ✦</b></span>
-      <div className="fries-cup">
-        <div className="fries-sticks">{Array.from({length:13},(_,i)=><i key={i}/>)}</div>
-        <div className="cup-sleeve">MASALA<br/><strong>FRIES</strong><small>✳ HOT STUFF ✳</small></div>
-      </div>
+      <span className="art-sticker sticker-right">SPICY<br/><b>INSIDE</b></span>
       <span className="art-caption">THE GOOD STUFF.</span>
     </div>
-    <div className="hero-bottomline"><span>MADE TO CRAVE</span><b>✳</b><span>BUILT FOR THE CRUNCH</span><b>✳</b><span>MASALA MAGIC</span></div>
+    <div className="hero-bottomline"><span>MADE TO CRAVE</span><Sparkles aria-hidden="true"/><span>BUILT FOR THE CRUNCH</span><Sparkles aria-hidden="true"/><span>MASALA MAGIC</span></div>
   </section>;
 }
