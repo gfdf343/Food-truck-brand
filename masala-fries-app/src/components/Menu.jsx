@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Check, Flame, Sparkles, ArrowUpRight } from 'lucide-react';
 
 const levels = [
-  { name: 'Mild', emoji: '🌶️', note: 'A gentle little kick' },
-  { name: 'Medium', emoji: '🌶️🌶️', note: 'The perfect balance' },
-  { name: 'Hot', emoji: '🌶️🌶️🌶️', note: 'Bring the heat' }
+  { name: 'Mild', heat: 1, note: 'A gentle little kick' },
+  { name: 'Medium', heat: 2, note: 'The perfect balance' },
+  { name: 'Hot', heat: 3, note: 'Bring the heat' }
 ];
 
 export default function Menu() {
@@ -14,7 +14,7 @@ export default function Menu() {
 
   const confirm = () => setNotice(choice === 'normal'
     ? 'Your classic Masala Fries are selected. Golden, crispy, and full of flavour!'
-    : `Your custom fries are set to ${spice.toLowerCase()} spice ${levels.find(x=>x.name===spice).emoji}. Bring on the crunch!`);
+    : `Your custom fries are set to ${spice.toLowerCase()} heat. Bring on the crunch!`);
 
   return <section className="menu-section section-pad" id="menu">
     <div className="section-heading reveal">
@@ -43,13 +43,13 @@ export default function Menu() {
     {choice==='custom' && <div className="spice-panel reveal">
       <div className="spice-heading"><p className="eyebrow">SET YOUR SPICE LEVEL</p><h3>HOW HOT ARE WE GOING?</h3><p>Choose the heat. We'll bring the crunch.</p></div>
       <div className="spice-options">{levels.map(level=><button key={level.name} className={spice===level.name?'spice-option active':'spice-option'} onClick={()=>{setSpice(level.name);setNotice('')}}>
-        <span className="peppers">{level.emoji}</span><strong>{level.name}</strong><small>{level.note}</small>{spice===level.name&&<span className="level-check"><Check size={12}/></span>}
+        <span className="peppers" aria-hidden="true">{Array.from({length:level.heat},(_,index)=><Flame key={index}/>)}</span><strong>{level.name}</strong><small>{level.note}</small>{spice===level.name&&<span className="level-check"><Check size={12}/></span>}
       </button>)}</div>
     </div>}
-    <div className="order-summary"><div><span>YOUR PICK</span><strong>{choice==='normal'?'Normal Fries':`Custom Fries · ${spice}`}</strong></div>
+    <div className="order-summary reveal"><div><span>YOUR PICK</span><strong>{choice==='normal'?'Normal Fries':`Custom Fries · ${spice}`}</strong></div>
       <button className="button button-dark" onClick={confirm}>Confirm my pick <ArrowUpRight size={16}/></button>
     </div>
     {notice&&<p className="confirmation" role="status"><Check size={17}/>{notice}</p>}
-    <p className="menu-footnote">TWO CHOICES. ENDLESS CRAVINGS. <Sparkles aria-hidden="true"/></p>
+    <p className="menu-footnote reveal">TWO CHOICES. ENDLESS CRAVINGS. <Sparkles aria-hidden="true"/></p>
   </section>;
 }
