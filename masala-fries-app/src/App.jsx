@@ -21,15 +21,27 @@ export default function App() {
         }
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    const observeReveal = node => {
+      if (!(node instanceof Element)) return;
+      if (node.matches('.reveal')) observer.observe(node);
+      node.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    };
     elements.forEach(el => observer.observe(el));
-    return () => observer.disconnect();
+    const additions = new MutationObserver(records => {
+      records.forEach(record => record.addedNodes.forEach(observeReveal));
+    });
+    additions.observe(document.body, { childList: true, subtree: true });
+    return () => {
+      observer.disconnect();
+      additions.disconnect();
+    };
   }, []);
 
   return <>
     <div className="announcement"><Sparkles aria-hidden="true"/> BIG CRUNCH. BOLD MASALA. <Sparkles aria-hidden="true"/></div>
     <Header/>
     <main><Hero/><Menu/><Story/>
-      <section className="closing"><p className="eyebrow light"><Sparkles aria-hidden="true"/> YOUR FRIES ARE CALLING</p><h2>LET&apos;S GET<br/><em>CRUNCHING.</em></h2><a className="button button-gold" href="#menu">Find your fries ↗</a><Sparkles className="closing-spark" aria-hidden="true"/></section>
+      <section className="closing reveal"><p className="eyebrow light"><Sparkles aria-hidden="true"/> YOUR FRIES ARE CALLING</p><h2>LET&apos;S GET<br/><em>CRUNCHING.</em></h2><a className="button button-gold" href="#menu">Find your fries ↗</a><Sparkles className="closing-spark" aria-hidden="true"/></section>
     </main>
     <Footer/>
   </>;
