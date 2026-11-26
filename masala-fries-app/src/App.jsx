@@ -8,32 +8,69 @@ import Footer from './components/Footer.jsx';
 
 export default function App() {
   useEffect(() => {
-    const elements = document.querySelectorAll('.reveal');
-    if (!('IntersectionObserver' in window)) {
-      elements.forEach(el => el.classList.add('is-visible'));
-      return;
-    }
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-          observer.unobserve(entry.target);
-        }
+    const tracked = new Set();
+    const observer = 'IntersectionObserver' in window
+      ? new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+              tracked.delete(entry.target);
+            }
+          });
+        }, { threshold: 0.08, rootMargin: '0px 0px -24px 0px' })
+      : null;
+    let animationFrame = 0;
+
+    const revealVisible = () => {
+      if (animationFrame) return;
+      animationFrame = window.requestAnimationFrame(() => {
+        animationFrame = 0;
+        tracked.forEach(element => {
+          if (!element.isConnected) {
+            observer?.unobserve(element);
+            tracked.delete(element);
+            return;
+          }
+          const bounds = element.getBoundingClientRect();
+          if (bounds.top < window.innerHeight && bounds.bottom > 0) {
+            element.classList.add('is-visible');
+            observer?.unobserve(element);
+            tracked.delete(element);
+          }
+        });
       });
-    }, { threshold: 0.12, rootMargin: '0px 0px -30px 0px' });
+    };
+
     const observeReveal = node => {
       if (!(node instanceof Element)) return;
-      if (node.matches('.reveal')) observer.observe(node);
-      node.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+      const elements = [
+        ...(node.matches('.reveal') ? [node] : []),
+        ...node.querySelectorAll('.reveal')
+      ];
+      elements.forEach(element => {
+        if (element.classList.contains('is-visible')) return;
+        tracked.add(element);
+        observer?.observe(element);
+      });
+      revealVisible();
     };
-    elements.forEach(el => observer.observe(el));
+
+    document.querySelectorAll('.reveal').forEach(observeReveal);
     const additions = new MutationObserver(records => {
       records.forEach(record => record.addedNodes.forEach(observeReveal));
     });
     additions.observe(document.body, { childList: true, subtree: true });
+    window.addEventListener('scroll', revealVisible, { passive: true });
+    window.addEventListener('resize', revealVisible);
+    revealVisible();
+
     return () => {
-      observer.disconnect();
+      observer?.disconnect();
       additions.disconnect();
+      window.removeEventListener('scroll', revealVisible);
+      window.removeEventListener('resize', revealVisible);
+      if (animationFrame) window.cancelAnimationFrame(animationFrame);
     };
   }, []);
 
