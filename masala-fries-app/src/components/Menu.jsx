@@ -75,7 +75,10 @@ export default function Menu() {
       })}
     </div>
     <div className="order-summary reveal">
-      <div><span>YOUR PICK</span><strong key={selectedFlavor.id} className="selected-flavor-name">{selectedFlavor.name}</strong></div>
+      <div className="order-summary-pick">
+        <img src={selectedFlavor.image} alt={selectedFlavor.imageAlt} />
+        <div className="order-summary-copy"><span>YOUR PICK</span><strong key={selectedFlavor.id} className="selected-flavor-name">{selectedFlavor.name}</strong></div>
+      </div>
       <button className="button button-dark" type="button" onClick={confirm}>Confirm my pick <ArrowUpRight size={16} aria-hidden="true"/></button>
     </div>
     {notice && <p className="confirmation" role="status"><Check size={17} aria-hidden="true"/>{notice}</p>}
